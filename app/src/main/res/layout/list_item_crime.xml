@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/crime_list_item_solvedCheckBox"
+        android:layout_alignParentEnd="true"
+        android:focusable="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crime Title"
+        android:id="@+id/crime_list_item_titleTextView"
+        android:paddingEnd="4dp"
+        android:paddingStart="4dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Crime date"
+        android:id="@+id/crime_list_item_dateTextView"
+        android:layout_alignParentTop="false"
+        android:paddingEnd="4dp"
+        android:paddingStart="4dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/crime_list_item_solvedCheckBox"
+        android:layout_toRightOf="@+id/crime_list_item_titleTextView" />
+</RelativeLayout>
