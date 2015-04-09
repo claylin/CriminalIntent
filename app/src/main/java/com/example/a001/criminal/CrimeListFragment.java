@@ -1,9 +1,8 @@
-package com.example.a001.test2;
+package com.example.a001.criminal;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;

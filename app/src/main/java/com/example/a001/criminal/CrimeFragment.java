@@ -1,4 +1,4 @@
-package com.example.a001.test2;
+package com.example.a001.criminal;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,10 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.TextView;
 
-
-import com.example.a001.test2.dummy.DummyContent;
 
 import java.util.Date;
 import java.util.UUID;

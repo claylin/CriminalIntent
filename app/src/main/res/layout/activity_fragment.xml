@@ -9,7 +9,7 @@
               android:divider="?android:attr/dividerHorizontal"
               android:orientation="horizontal"
               android:showDividers="middle"
-              tools:context="com.example.a001.test2.CrimeActivity">
+              tools:context="com.example.a001.criminal.CrimeActivity">
 
     <!--
     This layout is a two-pane layout for the Items

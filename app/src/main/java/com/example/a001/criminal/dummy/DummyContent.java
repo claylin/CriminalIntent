@@ -1,4 +1,4 @@
-package com.example.a001.test2.dummy;
+package com.example.a001.criminal.dummy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
