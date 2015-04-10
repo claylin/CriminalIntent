@@ -70,6 +70,7 @@ public class CrimeFragment extends Fragment {
                     NavUtils.navigateUpFromSameTask(getActivity());
                 }
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -82,12 +83,9 @@ public class CrimeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_crime, container, false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-//            if (NavUtils.getParentActivityName(getActivity()) != null) {
-//                ((ActionBarActivity)getActivity()).getActionBar().setDisplayHomeAsUpEnabled(true);
-//            }
-            ActionBarActivity a = (ActionBarActivity)getActivity();
-            if (a != null) {
-                ActionBar b = a.getSupportActionBar();
+            if (NavUtils.getParentActivityName(getActivity()) != null) {
+                //((ActionBarActivity)getActivity()).getActionBar().setDisplayHomeAsUpEnabled(true);
+                ActionBar b = ((ActionBarActivity)getActivity()).getSupportActionBar();
                 if (b != null)
                     b.setDisplayHomeAsUpEnabled(true);
             }
