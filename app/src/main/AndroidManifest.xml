@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.example.a001.criminal.CrimeListActivity" >
+        <activity android:name=".CrimeListActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,8 +19,10 @@
             <!--android:label="@string/title_item_list" >-->
         <!--</activity>-->
         <activity
-            android:name="com.example.a001.criminal.CrimePagerActivity"
+            android:name=".CrimePagerActivity"
             android:label="@string/title_activity_crime_pager" >
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value=".CrimeListActivity"/>
         </activity>
     </application>
 
