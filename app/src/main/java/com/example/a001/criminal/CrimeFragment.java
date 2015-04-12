@@ -21,7 +21,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-
+import android.widget.ImageButton;
+import android.content.pm.PackageManager;
+import android.hardware.Camera;
 
 import java.util.Date;
 import java.util.UUID;
@@ -38,6 +40,7 @@ public class CrimeFragment extends Fragment {
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
+    private ImageButton mPhotoButton;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -78,8 +81,7 @@ public class CrimeFragment extends Fragment {
 
     @TargetApi(11)
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_crime, container, false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -124,6 +126,23 @@ public class CrimeFragment extends Fragment {
                 mCrime.setSolved(isChecked);
             }
         });
+
+        mPhotoButton = (ImageButton)v.findViewById(R.id.crime_imageButton);
+        mPhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), CrimeCameraActivity.class);
+                startActivity(i);
+            }
+        });
+
+        // If camera is not available, disable camera functionality
+        PackageManager pm = getActivity().getPackageManager();
+        boolean hasACamera = pm.hasSystemFeature(PackageManager.FEATURE_CAMERA) || pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT) ||
+                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD && Camera.getNumberOfCameras() > 0);
+        if (!hasACamera) {
+            mPhotoButton.setEnabled(false);
+        }
 
         return v;
     }
