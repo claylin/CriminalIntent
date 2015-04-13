@@ -1,5 +1,7 @@
 package com.example.a001.criminal;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,6 +12,8 @@ import java.util.UUID;
  * Created by a001 on 2015/3/31.
  */
 public class Crime {
+
+    private static final String TAG = "Crime";
 
     private static final String JSON_ID = "id";
     private static final String JSON_TITLE = "title";

@@ -1,6 +1,7 @@
 package com.example.a001.criminal;
 
 import android.annotation.TargetApi;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -24,7 +25,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.widget.ImageView;
 
+import java.io.File;
 import java.util.Date;
 import java.util.UUID;
 
@@ -35,6 +38,8 @@ public class CrimeFragment extends Fragment {
     private static final String TAG = "CrimeFragment";
     public static final String EXTRA_CRIME_ID = "com.bignerdranch.android.criminalintent.crime_id";
     private static final String DIALOG_DATE = "date";
+    private static final String DIALOG_IMAGE = "image";
+
     private static final int REQUEST_DATE = 0;
     private static final int REQUEST_PHOTO = 1;
 
@@ -43,6 +48,8 @@ public class CrimeFragment extends Fragment {
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
     private ImageButton mPhotoButton;
+    private ImageView mPhotoView;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -65,6 +72,18 @@ public class CrimeFragment extends Fragment {
         setHasOptionsMenu(true);
         UUID crimeId = (UUID)getArguments().getSerializable(EXTRA_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        showPhoto();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        PictureUtils.cleanImageView(mPhotoView);
     }
 
     @Override
@@ -129,6 +148,19 @@ public class CrimeFragment extends Fragment {
             }
         });
 
+        mPhotoView = (ImageView)v.findViewById(R.id.crime_imageView);
+        mPhotoView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Photo p = mCrime.getPhoto();
+                if (p == null)
+                    return;
+
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                String path = getActivity().getFileStreamPath(p.getFilename()).getAbsolutePath();
+                ImageFragment.newInstance(path).show(fm, DIALOG_IMAGE);
+            }
+        });
+
         mPhotoButton = (ImageButton)v.findViewById(R.id.crime_imageButton);
         mPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +181,17 @@ public class CrimeFragment extends Fragment {
         return v;
     }
 
+    private void showPhoto() {
+        // (Re)set the image button's image based on our photo
+        Photo p = mCrime.getPhoto();
+        BitmapDrawable b = null;
+        if (p != null) {
+            String path = getActivity().getFileStreamPath(p.getFilename()).getAbsolutePath();
+            b = PictureUtils.getScaledDrawable(getActivity(), path);
+        }
+        mPhotoView.setImageDrawable(b);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) return;
@@ -161,8 +204,15 @@ public class CrimeFragment extends Fragment {
             String filename = data.getStringExtra(CrimeCameraFragment.EXTRA_PHOTO_FILENAME);
             if (filename != null) {
                 Photo p = new Photo(filename);
+
+                if (mCrime.getPhoto() != null)
+                    //Log.d(TAG, "Removing photo: " + getActivity().getFilesDir() + "/" + mCrime.getPhoto().getFilename());
+                    if (new File(getActivity().getFilesDir() + "/" + mCrime.getPhoto().getFilename()).delete()) {
+                        Log.d(TAG, "Removing photo: " + getActivity().getFilesDir() + "/" + mCrime.getPhoto().getFilename());
+                    }
+
                 mCrime.setPhoto(p);
-                Log.i(TAG, "Crime: " + mCrime.getTitle() + " has a photo");
+                showPhoto();
             }
         }
     }
