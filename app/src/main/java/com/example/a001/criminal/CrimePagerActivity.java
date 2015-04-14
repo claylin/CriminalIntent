@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 
-public class CrimePagerActivity extends ActionBarActivity {
+public class CrimePagerActivity extends ActionBarActivity implements CrimeFragment.Callbacks {
 
     private ViewPager mViewPager;
     private ArrayList<Crime> mCrimes;
@@ -58,5 +58,8 @@ public class CrimePagerActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    public void onCrimeUpdated(Crime crime) {
     }
 }
